@@ -45,7 +45,7 @@ def posts():
 @app.route('/posts/<int:index>')
 def post(index):
     p = posts_list[index]
-    return render_template('post.html', title=p['title'], post=p)
+    return render_template('post.html', title=p['title'], post=p, img=p['image_id'])
 
 @app.route('/about')
 def about():

@@ -111,3 +111,9 @@ body {
 .mar-top {
  margin-top: 15px;
 }
+
+.comments__img{
+ width: 80px;
+
+ border-radius: 50%;
+}

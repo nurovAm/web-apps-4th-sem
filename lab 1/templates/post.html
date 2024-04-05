@@ -4,10 +4,9 @@
     <section class="post">
         <h2 class="post__title">{{  title  }}</h2>
         <p class="post__author">{{  post['author']  }} <span>{{post['date']}}</span></p>
-        <img src="../static/images/{{post['image_id']}}" alt="" class="post__img">
+        <img class="card-img-top" src="{{ url_for('static', filename='images/' + post.image_id) }}" alt="Card image cap">
         <p>{{post['text']}}</p>
     </section>
-
 
 
 <section class="comment">
@@ -27,29 +26,37 @@
             </div>
     </form>
 
-{% for comment in post['comments'] %}
 
-    <div class="media-block">
-        <div class="media-body">
-            <div class="mar-btm">
-                <a href="#" class="btn-link text-semibold media-heading box-inline">{{comment['author']}}</a>
-                <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - 19-06-2016</p>
-            </div>
-            <p>{{comment['text']}}</p>
-            <div class="pad-ver">
-                <div class="btn-group">
-                    <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i class="fa fa-thumbs-up"></i> Нравится</a>
-                    <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
-                </div>
-                <a class="btn btn-sm btn-default btn-hover-primary" href="#">Ответить</a>
-            </div>
-            <hr>
-        </div>
+{% for comment in post['comments'] %}
+<div class="d-flex">
+    <div class="flex-shrink-0">
+        <img src="../static/images/avatar.jpg" class="rounded-circle comments__img" alt="Sample Image">
     </div>
+    <div class="flex-grow-1 ms-3">
+        <h5>{{comment['author']}}<small class="text-muted"></small></h5>
+        <p>{{comment['text']}}</p>
+
+        <!-- Nested media object -->
+       {%if comment['replies']%}
+            {% for replies in comment['replies'] %}
+             <div class="d-flex mt-4">
+            <div class="flex-shrink-0">
+                <img src="../static/images/avatar.jpg" class="rounded-circle comments__img" alt="Sample Image">
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <h5>{{replies['author']}} <small class="text-muted"></small></h5>
+                <p>{{replies['text']}}</p>
+            </div>
+        </div>
+        {%endfor%}
+
+        {%endif%}
+    </div>
+</div>
+
     {% endfor %}
 
 </section>
-
 
 
 
