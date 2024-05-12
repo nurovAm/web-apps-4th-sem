@@ -1,0 +1,52 @@
+{% macro form_user(user, errors, value)%}
+
+    <form method="POST">
+        {% if request.endpoint == 'createuser'%}
+            <div class="mb-3">
+                <input type="login" class="form-control" id="" aria-describedby="" placeholder="Login" name="login" value={{ value['login'] or '' }}>
+            </div>
+            {% if errors['errors_login'] %}
+                <div class="invalid-feedback">
+                    {{errors['errors_login']}}
+                </div>
+            {% endif %}
+            <div class="mb-3">
+                <input type="password" class="form-control" id="" aria-describedby="" placeholder="Password" name="password" value={{ value['login'] or '' }}>
+            </div>
+            {% if errors['errors_password'] %}
+                <div class="invalid-feedback">
+                    {{errors['errors_password']}}
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <div class="mb-3">
+            <input type="text" class="form-control" id="" aria-describedby="" placeholder="First name" name="first_name" {% if request.endpoint == 'showuser' or request.endpoint == 'delete_user' or request.endpoint == 'change_password'%}disabled{%endif%} {% if request.endpoint == 'createuser'%}value={{value['firstname'] or ''}}{%else%} value={{user.first_name or ''}}{%endif%} >
+        </div>
+        {% if errors['errors_firstname'] %}
+            <div class="invalid-feedback">
+                {{errors['errors_firstname']}}
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            <input type="text" class="form-control" id="" aria-describedby="" placeholder="Last name" name="last_name" {% if request.endpoint == 'showuser' or request.endpoint == 'delete_user'%}disabled{%endif%}  {% if request.endpoint == 'createuser'%}value={{value['lastname'] or ''}}{%else%} value={{user.last_name or ''}}{%endif%}>
+        </div>
+        {% if errors['errors_lastname'] %}
+            <div class="invalid-feedback">
+                {{errors['errors_lastname']}}
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            <input type="text" class="form-control" id="" aria-describedby="" placeholder="Last name" name="middle_name" {% if request.endpoint == 'showuser' or request.endpoint == 'delete_user'  %}disabled{%endif%} value={{user.middle_name or ''}}>
+        </div>
+        <button type="submit" class="btn btn-primary {% if request.endpoint == 'showuser' or request.endpoint == 'delete_user'%}display-none{%endif%}">Submit</button>
+        
+        {%if request.endpoint=='delete_user'%}
+            <div class="mb-3">
+                <a href="{{url_for('userlist')}}" class="btn btn-primary">Назад</a>
+                <input type="submit" class="btn btn-danger" id="" aria-describedby="" name="middle_name" value="Удалить">
+            </div>
+        {%endif%}
+    
+    </form>
+{% endmacro%}
